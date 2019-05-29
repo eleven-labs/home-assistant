@@ -1,0 +1,11 @@
+- trigger:
+    platform: state
+    entity_id: sensor.test_gitlab_projet_x
+  condition:
+    - condition: template
+      value_template: "{{ is_state('sensor.test_gitlab_projet_x_build_branch', 'master') }}"
+  action:
+      - service: variable.set_variable
+        data:
+          variable: master_status
+          value_template: "{{ states('sensor.test_gitlab_projet_x') }}"

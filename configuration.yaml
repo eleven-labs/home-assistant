@@ -1,0 +1,61 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 48.8543
+  longitude: 2.3527
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Paris
+  # Customization file
+  customize: !include customize.yaml
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Discover some devices automatically
+discovery:
+
+lovelace:
+  mode: yaml
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr
+  - platform: template
+    sensors:
+      test_gitlab_projet_x_build_branch: #nom que l’on donne à notre sensor custom
+        value_template: "{{ state_attr('sensor.test_gitlab_projet_x', 'build branch') }}" # On recupere et affiche l’attribute ‘build branche’
+        friendly_name: "Branch"
+    entity_id: test_gitlab_projet_x #Le sensor va écouter cet entity pour changer ses valeurs 
+  - platform: template
+    sensors:
+      test_gitlab_projet_x_commit_date:
+        value_template: "{{ state_attr('sensor.test_gitlab_projet_x', 'commit date') }}"
+        friendly_name: "Date"
+    entity_id: test_gitlab_projet_x
+      
+  - platform: gitlab_ci #référence du plugin
+    gitlab_id: xxx #ID du projet à monitorer
+    token: xxx #token gitlab
+    name: Test gitlab projet X # va etre l'id de votre sensor
+
+variable:
+  master_status:
+    value: "Waiting"
+    
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml

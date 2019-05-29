@@ -1,0 +1,20 @@
+title: Dashboard
+views:
+    # View tab title.
+  - title: Gitlab
+    icon: mdi:gitlab
+    id: gitlab
+    cards:
+      - type: entities
+        title: Gitlab X Project
+        entities:
+          - entity: sensor.test_gitlab_projet_x
+          - entity: sensor.test_gitlab_projet_x_build_branch
+          - entity: sensor.test_gitlab_projet_x_commit_date
+            icon: mdi:calendar-range   
+      - type: entities
+        title: Gitlab X Project Master
+        entities:
+          - entity: variable.master_status
+  - title: Other
+    id: other
