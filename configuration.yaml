@@ -46,8 +46,8 @@ sensor:
         entity_id: sensor.test_gitlab_projet_x
       
   - platform: gitlab_ci #référence du plugin
-    gitlab_id: 11824592 #ID du projet à monitorer
-    token: 6ZFZAbozKW8_3fQwhyqV #token gitlab
+    gitlab_id: xxx #ID du projet à monitorer
+    token: xxxx #token gitlab
     name: Test gitlab projet X # va etre l'id de votre sensor
 
 variable:
