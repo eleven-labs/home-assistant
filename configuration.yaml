@@ -26,6 +26,10 @@ discovery:
 lovelace:
   mode: yaml
 
+cast:
+  media_player:
+    - host: 192.168.1.37
+
 # Sensors
 sensor:
   # Weather prediction
@@ -35,17 +39,15 @@ sensor:
       test_gitlab_projet_x_build_branch: #nom que l’on donne à notre sensor custom
         value_template: "{{ state_attr('sensor.test_gitlab_projet_x', 'build branch') }}" # On recupere et affiche l’attribute ‘build branche’
         friendly_name: "Branch"
-    entity_id: test_gitlab_projet_x #Le sensor va écouter cet entity pour changer ses valeurs 
-  - platform: template
-    sensors:
+        entity_id: sensor.test_gitlab_projet_x #Le sensor va écouter cet entity pour changer ses valeurs 
       test_gitlab_projet_x_commit_date:
         value_template: "{{ state_attr('sensor.test_gitlab_projet_x', 'commit date') }}"
         friendly_name: "Date"
-    entity_id: test_gitlab_projet_x
+        entity_id: sensor.test_gitlab_projet_x
       
   - platform: gitlab_ci #référence du plugin
-    gitlab_id: xxx #ID du projet à monitorer
-    token: xxx #token gitlab
+    gitlab_id: 11824592 #ID du projet à monitorer
+    token: 6ZFZAbozKW8_3fQwhyqV #token gitlab
     name: Test gitlab projet X # va etre l'id de votre sensor
 
 variable:
