@@ -9,3 +9,48 @@
         data:
           variable: master_status
           value_template: "{{ states('sensor.test_gitlab_projet_x') }}"
+- trigger:
+    platform: state
+    entity_id: sensor.test_gitlab_projet_x
+  condition:
+    - condition: state
+      entity_id: sensor.test_gitlab_projet_x
+      state: 'failed' #if CI failed
+  action:
+    - service: tts.google_translate_say
+      entity_id: "all"
+      data:
+        message: 'ah ah ah, you didn't say the magic word'
+    - service: light.turn_on #Action to turn on light
+      data:
+        entity_id: light.bureau #entity to turn on
+        brightness: 255
+        rgb_color: [255,0,0] #red color (RGB)
+    - delay:
+        seconds: 5 #wait 5 sec
+    - service: light.turn_off #then turn off light
+      data:
+        entity_id: light.bureau
+
+- trigger:
+    platform: state
+    entity_id: sensor.test_gitlab_projet_x
+  condition:
+    - condition: state
+      entity_id: sensor.test_gitlab_projet_x
+      state: 'success'
+  action:
+    - service: tts.google_translate_say
+      entity_id: "all"
+      data:
+        message: 'GG, it's all Green ready to prod'
+    - service: light.turn_on
+      data:
+        entity_id: light.bureau
+        brightness: 255
+        rgb_color: [0,255,0]
+    - delay:
+        seconds: 5
+    - service: light.turn_off
+      data:
+        entity_id: light.bureau
